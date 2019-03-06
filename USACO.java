@@ -14,6 +14,7 @@ public class USACO {
     if (s.hasNext()) C = Integer.parseInt(s.next());
     if (s.hasNext()) E = Integer.parseInt(s.next());
     if (s.hasNext()) N = Integer.parseInt(s.next());
+    System.out.println(R+" "+C+" "+E+" "+N);
     //fill in the array
     int[][] squares = new int[R][C];
     for (int i = 0; i < R; i++) {
@@ -28,11 +29,28 @@ public class USACO {
       }
       System.out.print("\n");
     }
-    return -1;
+    //start digging, one instruction at a time
+    for (int n = 0; n < N; n++) {
+      int R_s = 0;
+      int C_s = 0;
+      int D_s = 0;
+      if (s.hasNext()) {
+        R_s = Integer.parseInt(s.next());
+      }
+      if (s.hasNext()) {
+        C_s = Integer.parseInt(s.next());
+      }
+      if (s.hasNext()) {
+        D_s = Integer.parseInt(s.next());
+      }
+      System.out.println(R_s+" "+C_s+" "+D_s);
+    }
+
+    return -1; //so it compiles
   }
 
   public static int silver(String filename) {
-    return -1;
+    return -1; //so it compiles
   }
 
   public static void main(String[] args) {
