@@ -174,9 +174,13 @@ public class USACO {
     if (s.hasNext()) C2 = Integer.parseInt(s.next());
     printing += "\nPRESETS: \n======\n" + R1 + " " + C1 + " " + R2 + " " +C2;
 
-
+    fillPasture(T, R1, C1);
     System.out.println(printing+"\n");
     return -1; //so it compiles
+  }
+
+  public void fillPasture(int time, int row, int col){
+    if (time == 0) pasture[row][col]++;
   }
 
   public static void main(String[] args) {
