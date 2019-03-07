@@ -44,6 +44,17 @@ public class USACO {
         D_s = Integer.parseInt(s.next());
       }
       System.out.println(R_s+" "+C_s+" "+D_s);
+      for (int r = -1; r < 2; r++) {
+      	for (int c = -1; c < 2; c++) {
+      		squares[R_s+r][C_s+c] = squares[R_s+r][C_s+c] - D_s;
+      	}
+      }
+    }
+    for (int i = 0; i < squares.length; i++) {
+      for (int j = 0; j < squares[i].length; j++) {
+        System.out.print(squares[i][j] + " ");
+      }
+      System.out.print("\n");
     }
 
     return -1; //so it compiles
