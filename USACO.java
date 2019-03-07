@@ -4,6 +4,7 @@ import java.io.*;
 public class USACO {
   public static int bronze(String filename) throws FileNotFoundException{
   	String printing = "";
+
     int R = 0;
     int C = 0;
     int E = 0;
@@ -16,7 +17,7 @@ public class USACO {
     if (s.hasNext()) E = Integer.parseInt(s.next());
     if (s.hasNext()) N = Integer.parseInt(s.next());
     printing += "PRESETS: \n======\n" + R + " " + C + " " + E + " " +N;
-    
+
     //fill in the array
     int[][] squares = new int[R][C];
     for (int i = 0; i < R; i++) {
@@ -25,7 +26,7 @@ public class USACO {
       }
     }
     printing += "\n\nBOARD:\n======\n";
-    
+
     //print heights
     for (int i = 0; i < squares.length; i++) {
       for (int j = 0; j < squares[i].length; j++) {
@@ -40,7 +41,7 @@ public class USACO {
       int R_s = 0;
       int C_s = 0;
       int D_s = 0;
-      
+
       //set starting position and initial amount of digging PER instruction
       if (s.hasNext()) {
         R_s = Integer.parseInt(s.next());
@@ -51,9 +52,9 @@ public class USACO {
       if (s.hasNext()) {
         D_s = Integer.parseInt(s.next());
       }
-      
+
       printing += R_s+" "+C_s+" "+D_s;
-      
+
       //find biggest number
       int max = squares[R_s][C_s];
       for (int r = -1; r < 2; r++) {
@@ -78,9 +79,9 @@ public class USACO {
       	}
       }
     }
-    
+
     printing += "\n\nNEW BOARD:\n======\n";
-    
+
     //find volume
     int aDepth = 0;
     int volume = 0;
@@ -112,15 +113,15 @@ public class USACO {
       }
       printing += "\n";
     }
-    
+
     printing += "\n\nAGGREGATED DEPTH:\n======\n";
     printing += aDepth;
-    
+
     volume = aDepth * 72 * 72; //volume = depth * 6 feet * 6 feet
-    
+
     printing += "\n\nVOLUME:\n======\n";
     printing += volume + "\n";
-    
+
     //SINGLE PRINT STATION TO SHOW ALL STEPS
     //System.out.println(printing);
 
@@ -128,13 +129,60 @@ public class USACO {
     //return -1; //so it compiles
   }
 
-  public static int silver(String filename) {
+  public static int silver(String filename) throws FileNotFoundException{
+    String printing = "";
+
+    int N = 0;
+    int M = 0;
+    int T = 0;
+    File f = new File(filename);
+    Scanner s = new Scanner(f);
+    if (s.hasNext()) N = Integer.parseInt(s.next());
+    if (s.hasNext()) M = Integer.parseInt(s.next());
+    if (s.hasNext()) T = Integer.parseInt(s.next());
+    printing += "PRESETS: \n======\n" + N + " " + M + " " + T;
+
+    //filling new array with ints to represent the pasture and trees given in
+    //the file
+    int[][] pasture = new int[N][M];
+    for (int i = 0; i < N; i++) {
+      if (s.hasNext()) {
+        String x = s.next();
+        for (int j = 0; j < M; j++) {
+          if (x.charAt(j) == '.') pasture[i][j] = 0;
+          if (x.charAt(j) == '*') pasture[i][j] = -1;
+        }
+      }
+    }
+
+    //print pasture
+    printing += "\n\nBOARD:\n======\n";
+    for (int i = 0; i < pasture.length; i++) {
+      for (int j = 0; j < pasture[i].length; j++) {
+        printing += pasture[i][j] + " ";
+      }
+      printing += "\n";
+    }
+
+    int R1 = 0;
+    int C1 = 0;
+    int R2 = 0;
+    int C2 = 0;
+    if (s.hasNext()) R1 = Integer.parseInt(s.next());
+    if (s.hasNext()) C1 = Integer.parseInt(s.next());
+    if (s.hasNext()) R2 = Integer.parseInt(s.next());
+    if (s.hasNext()) C2 = Integer.parseInt(s.next());
+    printing += "\nPRESETS: \n======\n" + R1 + " " + C1 + " " + R2 + " " +C2;
+
+
+    System.out.println(printing+"\n");
     return -1; //so it compiles
   }
 
   public static void main(String[] args) {
     try {
-      System.out.println(bronze("makelake.1.in"));
+      //System.out.println(bronze("makelake.1.in"));
+      System.out.println(silver("ctravel.1.in"));
     }catch(FileNotFoundException e) {
       System.out.println("invalid filename");
     }
