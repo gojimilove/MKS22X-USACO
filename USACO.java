@@ -3,6 +3,7 @@ import java.io.*;
 
 public class USACO {
   public static int bronze(String filename) throws FileNotFoundException{
+  	String printing = "";
     int R = 0;
     int C = 0;
     int E = 0;
@@ -14,7 +15,8 @@ public class USACO {
     if (s.hasNext()) C = Integer.parseInt(s.next());
     if (s.hasNext()) E = Integer.parseInt(s.next());
     if (s.hasNext()) N = Integer.parseInt(s.next());
-    System.out.println(R+" "+C+" "+E+" "+N);
+    printing += "PRESETS: \n======\n" + R + " " + C + " " + E + " " +N;
+    
     //fill in the array
     int[][] squares = new int[R][C];
     for (int i = 0; i < R; i++) {
@@ -22,18 +24,24 @@ public class USACO {
         if (s.hasNext()) squares[i][j] = Integer.parseInt(s.next());
       }
     }
-    //print array
+    printing += "\n\nBOARD:\n======\n";
+    
+    //print heights
     for (int i = 0; i < squares.length; i++) {
       for (int j = 0; j < squares[i].length; j++) {
-        System.out.print(squares[i][j] + " ");
+        printing += squares[i][j] + " ";
       }
-      System.out.print("\n");
+      printing += "\n";
     }
+    printing += "\n\nINSTRUCTIONS:\n======\n";
+
     //start digging, one instruction at a time
     for (int n = 0; n < N; n++) {
       int R_s = 0;
       int C_s = 0;
       int D_s = 0;
+      
+      //set starting position and initial amount of digging PER instruction
       if (s.hasNext()) {
         R_s = Integer.parseInt(s.next());
       }
@@ -43,21 +51,81 @@ public class USACO {
       if (s.hasNext()) {
         D_s = Integer.parseInt(s.next());
       }
-      System.out.println(R_s+" "+C_s+" "+D_s);
+      
+      printing += R_s+" "+C_s+" "+D_s;
+      
+      //find biggest number
+      int max = squares[R_s][C_s];
       for (int r = -1; r < 2; r++) {
       	for (int c = -1; c < 2; c++) {
-      		squares[R_s+r][C_s+c] = squares[R_s+r][C_s+c] - D_s;
+      		if (squares[R_s+r][C_s+c] > max) max = squares[R_s+r][C_s+c];
+      	}
+      }
+      //find number other spaces should stop digging at
+      int dig = max - D_s;
+      //System.out.println(max);
+      //System.out.println(dig);
+
+      //change the 9 numbers selected
+      for (int r = -1; r < 2; r++) {
+      	for (int c = -1; c < 2; c++) {
+      		//start with original value, end up as new number
+      		int num = squares[R_s+r][C_s+c];
+      		while (num > dig) { //make it smaller until it reaches the limit
+      			num--;
+      		}
+      		squares[R_s+r][C_s+c] = num; //put it back in
       	}
       }
     }
-    for (int i = 0; i < squares.length; i++) {
-      for (int j = 0; j < squares[i].length; j++) {
-        System.out.print(squares[i][j] + " ");
-      }
-      System.out.print("\n");
+    
+    printing += "\n\nNEW BOARD:\n======\n";
+    
+    //find volume
+    int aDepth = 0;
+    int volume = 0;
+
+    int[][] depths = new int[R][C];
+    for (int i = 0; i < R; i++) {
+    	for (int j = 0; j < C; j++) {
+    		depths[i][j] = E - squares[i][j];
+     	}
     }
 
-    return -1; //so it compiles
+    //print heights
+    for (int i = 0; i < squares.length; i++) {
+      for (int j = 0; j < squares[i].length; j++) {
+        printing += squares[i][j] + " ";
+      }
+      printing += "\n";
+    }
+
+    //add depths (and print)
+    printing += "\n\nDEPTHS:\n======\n";
+    for (int i = 0; i < depths.length; i++) {
+      for (int j = 0; j < depths[i].length; j++) {
+        if (depths[i][j] > 0) {
+        	aDepth += depths[i][j];
+        	printing += depths[i][j] + " ";
+        }
+        else printing += "- ";
+      }
+      printing += "\n";
+    }
+    
+    printing += "\n\nAGGREGATED DEPTH:\n======\n";
+    printing += aDepth;
+    
+    volume = aDepth * 72 * 72; //volume = depth * 6 feet * 6 feet
+    
+    printing += "\n\nVOLUME:\n======\n";
+    printing += volume + "\n";
+    
+    //SINGLE PRINT STATION TO SHOW ALL STEPS
+    //System.out.println(printing);
+
+    return volume;
+    //return -1; //so it compiles
   }
 
   public static int silver(String filename) {
@@ -66,7 +134,7 @@ public class USACO {
 
   public static void main(String[] args) {
     try {
-      bronze("makelake.1.in");
+      System.out.println(bronze("makelake.1.in"));
     }catch(FileNotFoundException e) {
       System.out.println("invalid filename");
     }
