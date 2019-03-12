@@ -219,7 +219,7 @@ public class USACO {
       printing += "\n";
     }
 
-    System.out.println(printing+"\n");
+    //System.out.println(printing+"\n");
     return pasture[R2-1][C2-1]; //so it compiles
   }
 
