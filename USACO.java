@@ -168,16 +168,16 @@ public class USACO {
     int C1 = 0;
     int R2 = 0;
     int C2 = 0;
-    if (s.hasNext()) R1 = Integer.parseInt(s.next())-1;
-    if (s.hasNext()) C1 = Integer.parseInt(s.next())-1;
-    if (s.hasNext()) R2 = Integer.parseInt(s.next())-1;
-    if (s.hasNext()) C2 = Integer.parseInt(s.next())-1;
-    printing += "\nPRESETS: \n======\n" + (R1+1) + " " + (C1+1) + " " + (R2+1) + " " + (C2+1);
+    if (s.hasNext()) R1 = Integer.parseInt(s.next());
+    if (s.hasNext()) C1 = Integer.parseInt(s.next());
+    if (s.hasNext()) R2 = Integer.parseInt(s.next());
+    if (s.hasNext()) C2 = Integer.parseInt(s.next());
+    printing += "\nPRESETS: \n======\n" + R1 + " " + C1 + " " + R2 + " " +C2;
 
     //new array with number of moves
     int[][]moves = new int[N][M];
     //start with time = 0, starting place gets one
-    pasture[R1][C1] = 1;
+    pasture[R1-1][C1-1] = 1;
     //repeat for as many steps are given
     for (int t = 0; t < T; t++) {
     	//for each space in the array fill in all the numbers around it that add up
@@ -199,6 +199,10 @@ public class USACO {
     					moves[i][j] += pasture[i][j+1];
     				}
     			}
+    			//if there's a tree
+    			else {
+    				moves[i][j] = -1;
+    			}
     		}
     	}
     	//need to put the current moves for this "second" on the real board, reset moves board for the next second
@@ -216,7 +220,7 @@ public class USACO {
     }
 
     System.out.println(printing+"\n");
-    return pasture[R2][C2]; //so it compiles
+    return pasture[R2-1][C2-1]; //so it compiles
   }
 
   public static void main(String[] args) {
