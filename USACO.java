@@ -174,13 +174,40 @@ public class USACO {
     if (s.hasNext()) C2 = Integer.parseInt(s.next());
     printing += "\nPRESETS: \n======\n" + R1 + " " + C1 + " " + R2 + " " +C2;
 
-    fillPasture(T, R1, C1);
+    //new array with number of moves
+    int[][]moves = new int[N][M];
+    //start with time = 0, starting place gets one
+    board[R1][C1] = 1;
+    //repeat for as many steps are given
+    for (int t = 0; t < T; t++) {
+    	//for each space in the array fill in all the numbers around it that add up
+    	for (int i = 0; i < pasture.length; i++) {
+    		for (int j = 0; j < pasture[0].length; j++) {
+    			//only works if there is no tree
+    			if (pasture[i][j] >= 0) {
+    				//for each of the 4 directions, if it is a valid space on the board then 
+    				//it will add the number from there to the original space
+    				if (i - 1 >= 0 && pasture[i][j] < 0) {
+    					moves[i][j] += pasture[i-1][j];
+    				}
+    				if (i + 1 < pasture.length && pasture[i][j] < 0) {
+    					moves[i][j] += pasture[i+1][j];
+    				}
+    				if (j - 1 >= 0 && pasture[i][j] < 0) {
+    					moves[i][j] += pasture[i][j-1];
+    				}
+    				if (j + 1 < pasture[0].length && pasture[i][j] < 0) {
+    					moves[i][j] += pasture[i][j+1];
+    				}
+    			}
+    		}
+    	}
+    }
+
+
+
     System.out.println(printing+"\n");
     return -1; //so it compiles
-  }
-
-  public void fillPasture(int time, int row, int col){
-    if (time == 0) pasture[row][col]++;
   }
 
   public static void main(String[] args) {
